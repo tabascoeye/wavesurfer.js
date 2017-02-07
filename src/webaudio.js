@@ -286,7 +286,10 @@ WaveSurfer.WebAudio = {
         // close the audioContext if it was created by wavesurfer
         // not passed in as a parameter
         if (!this.params.audioContext) {
-            this.ac.close();
+            // check if browser supports AudioContext.close()
+            if (typeof this.ac.close() !== 'undefined') {
+                this.ac.close();
+            }
         }
     },
 
@@ -401,6 +404,13 @@ WaveSurfer.WebAudio = {
     */
     getCurrentTime: function () {
         return this.state.getCurrentTime.call(this);
+    },
+
+    /**
+    *   Returns the current playback rate.
+    */
+    getPlaybackRate: function () {
+        return this.playbackRate;
     },
 
     /**
